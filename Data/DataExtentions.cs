@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.API.Data;
@@ -6,12 +7,12 @@ namespace GameStore.API.Data;
 public static class DataExtentions
 {
 
-    public static void MigrateDb(this WebApplication app)
+    public static async Task MigrateDbAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
         
-        dbContext.Database.Migrate();
+       await dbContext.Database.MigrateAsync();
 
     }
 
