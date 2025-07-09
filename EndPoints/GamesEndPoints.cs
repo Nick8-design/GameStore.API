@@ -24,10 +24,12 @@ public static class GamesEndPoints
         route.MapGet("/",async (GameStoreContext dbContext) =>
         {
 
+            // await Task.Delay(3000);
+
 
             return await dbContext.Games
             .Include(x => x.Genre)
-            .Select(x => x.ToGameDetailsDto())
+            .Select(x => x.ToGameSummary())
             .AsNoTracking()
             .ToListAsync()
 
@@ -45,7 +47,8 @@ public static class GamesEndPoints
             var game =  await dbContext.Games.FindAsync(id);
 
 
-            return game is null ? Results.NotFound() : Results.Ok(game);
+            return game is null ? Results.NotFound()
+             : Results.Ok(game.ToGameDetailsDto());
 
         }
         )
@@ -60,6 +63,7 @@ public static class GamesEndPoints
         route.MapPost("/",async (CreateGameDto newGame,GameStoreContext dbContext) =>
         {
             Game game = newGame.ToEntity();
+           
           
             dbContext.Games.Add(game);
          await   dbContext.SaveChangesAsync();
@@ -95,7 +99,7 @@ public static class GamesEndPoints
         });
 
 
-        //DEl 
+        //DEL
         route.MapDelete("/{id}",async (int id,GameStoreContext dbCOntext) =>
         {
          await   dbCOntext.Games

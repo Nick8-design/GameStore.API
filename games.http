@@ -5,16 +5,17 @@ GET http://localhost:5015/games
 
 GET http://localhost:5015/games/3
 
+
 ###
 
 POST http://localhost:5015/games
 Content-Type: application/json
 
 {
-   "name":"Candy Crush",
+   "name":"Into the unkown unending void",
     "genreId":3,
-    "price":12.9,
-    "releaseDate":"2011-11-18"
+    "price":90.9,
+    "releaseDate":"2024-11-13"
 
 }
 
